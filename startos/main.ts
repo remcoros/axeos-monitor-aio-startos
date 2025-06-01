@@ -94,13 +94,13 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     '/assets/provisioning/datasources/prometheus.yml',
     '/etc/grafana/provisioning/datasources/prometheus.yml',
   )
-  await ensureFileExists(
-    grafanaSubcontainer,
-    '/assets/provisioning/dashboards/dashboards.yml',
-    '/etc/grafana/provisioning/dashboards/dashboards.yml',
-  )
+  // await ensureFileExists(
+  //   grafanaSubcontainer,
+  //   '/assets/provisioning/dashboards/dashboards.yml',
+  //   '/etc/grafana/provisioning/dashboards/dashboards.yml',
+  // )
 
-  // add axeos dashboard
+  // add/update default axeos dashboard
   const src = grafanaSubcontainer.rootfs + '/assets/dashboards/axeos.json'
   const dst = grafanaSubcontainer.rootfs + '/etc/grafana/dashboards/axeos.json'
   exec(`cp ${src} ${dst} && chown 472:0 ${dst}`)

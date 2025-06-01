@@ -24,7 +24,7 @@ export const manifest = setupManifest({
     prometheus: {
       arch: ['x86_64'],
       source: {
-        dockerTag: 'prom/prometheus:v3.4.0',
+        dockerTag: 'prom/prometheus:v3.4.1',
       },
     },
     'json-exporter': {
