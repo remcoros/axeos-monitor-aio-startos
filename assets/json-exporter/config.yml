@@ -61,6 +61,12 @@ modules:
         help: Hash rate in GH/s
         labels:
           hostname: "{.hostname}"
+      - name: axe_expected_hash_rate
+        path: "{.expectedHashrate}"
+        type: value
+        help: Expected hash rate in GH/s
+        labels:
+          hostname: "{.hostname}"
       - name: axe_frequency
         path: "{.frequency}"
         type: value
@@ -77,6 +83,12 @@ modules:
         path: "{.uptimeSeconds}"
         type: value
         help: Uptime in seconds
+        labels:
+          hostname: "{.hostname}"
+      - name: axe_stratum_diff
+        path: "{.stratumDiff}"
+        type: value
+        help: Stratum difficulty
         labels:
           hostname: "{.hostname}"
       - name: axe_vr_temp
