@@ -27,9 +27,21 @@ check-init:
 ingredients: $(INGREDIENTS)
 	@echo "Re-evaluating ingredients..."
 
-${PACKAGE_ID}.s9pk: $(INGREDIENTS) | check-deps check-init
+${PACKAGE_ID}.s9pk: $(INGREDIENTS) $(shell git ls-files assets) | check-deps check-init
 	@$(MAKE) --no-print-directory ingredients
 	start-cli s9pk pack
+
+x86: $(INGREDIENTS) $(shell git ls-files assets) | check-deps check-init
+	@$(MAKE) --no-print-directory ingredients
+	BUILD=x86 start-cli s9pk pack
+	@echo " Done!"
+	@echo " Filesize:$(shell du -h $(PACKAGE_ID).s9pk) is ready"
+
+arm: $(INGREDIENTS) $(shell git ls-files assets) | check-deps check-init
+	@$(MAKE) --no-print-directory ingredients
+	BUILD=arm start-cli s9pk pack
+	@echo " Done!"
+	@echo " Filesize:$(shell du -h $(PACKAGE_ID).s9pk) is ready"
 
 javascript/index.js: $(shell git ls-files startos) tsconfig.json node_modules package.json
 	npm run build

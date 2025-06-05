@@ -78,6 +78,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   )
 
   // Fix file permissions
+  exec(`chown -R 472:0 ${grafanaSubcontainer.rootfs}/assets`)
   exec(`chown -R 472:0 ${grafanaSubcontainer.rootfs}/var/lib/grafana`)
   exec(`chown -R 472:0 ${grafanaSubcontainer.rootfs}/etc/grafana`)
 
@@ -89,21 +90,9 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   exec(`chmod g+w ${jsonExporterSubcontainer.rootfs}/config`)
 
   // grafana provisioning
-  await ensureFileExists(
-    grafanaSubcontainer,
-    '/assets/provisioning/datasources/prometheus.yml',
-    '/etc/grafana/provisioning/datasources/prometheus.yml',
-  )
-  // await ensureFileExists(
-  //   grafanaSubcontainer,
-  //   '/assets/provisioning/dashboards/dashboards.yml',
-  //   '/etc/grafana/provisioning/dashboards/dashboards.yml',
-  // )
-
-  // add/update default axeos dashboard
-  const src = grafanaSubcontainer.rootfs + '/assets/dashboards/axeos.json'
-  const dst = grafanaSubcontainer.rootfs + '/etc/grafana/dashboards/axeos.json'
-  exec(`cp ${src} ${dst} && chown 472:0 ${dst}`)
+  exec(`cp ${grafanaSubcontainer.rootfs}/assets/provisioning/datasources/prometheus.yml ${grafanaSubcontainer.rootfs}/etc/grafana/provisioning/datasources/prometheus.yml`)
+  exec(`cp ${grafanaSubcontainer.rootfs}/assets/provisioning/dashboards/dashboards.yml ${grafanaSubcontainer.rootfs}/etc/grafana/provisioning/dashboards/dashboards.yml`)
+  exec(`cp ${grafanaSubcontainer.rootfs}/assets/dashboards/axeos.json ${grafanaSubcontainer.rootfs}/etc/grafana/dashboards/axeos.json`)
 
   const healthReceipts: T.HealthCheck[] = []
 

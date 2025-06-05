@@ -1,4 +1,15 @@
 import { setupManifest } from '@start9labs/start-sdk'
+import { SDKImageInputSpec } from '@start9labs/start-sdk/base/lib/types/ManifestTypes'
+
+// the following allows us to build the service for x86 or arm64 specifically
+// use: 'make x86' or 'make arm' ('make' will build both)
+const BUILD = process.env.BUILD || ''
+const arch =
+  BUILD === 'x86'
+    ? ['x86_64']
+    : BUILD === 'arm'
+      ? ['aarch64']
+      : ['x86_64', 'aarch64']
 
 export const manifest = setupManifest({
   id: 'axeos-monitor-aio',
@@ -16,23 +27,23 @@ export const manifest = setupManifest({
   volumes: ['grafana', 'prometheus'],
   images: {
     grafana: {
-      arch: ['x86_64'],
+      arch: arch,
       source: {
         dockerTag: 'grafana/grafana-oss:12.0.1',
       },
-    },
+    } as SDKImageInputSpec,
     prometheus: {
-      arch: ['x86_64'],
+      arch: arch,
       source: {
         dockerTag: 'prom/prometheus:v3.4.1',
       },
-    },
+    } as SDKImageInputSpec,
     'json-exporter': {
-      arch: ['x86_64'],
+      arch: arch,
       source: {
         dockerTag: 'prometheuscommunity/json-exporter:v0.7.0',
       },
-    },
+    } as SDKImageInputSpec,
   },
   hardwareRequirements: {},
   alerts: {
