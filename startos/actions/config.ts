@@ -100,7 +100,7 @@ async function writeSettings(effects: T.Effects, input: InputSpec) {
       },
     ],
   })
-  
+
   await reloadPrometheusConfig.run({
     effects,
     input: {},

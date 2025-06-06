@@ -1,3 +1,4 @@
+import { manifest } from '../manifest'
 import { sdk } from '../sdk'
 
 export const reloadPrometheusConfig = sdk.Action.withoutInput(
@@ -20,7 +21,7 @@ export const reloadPrometheusConfig = sdk.Action.withoutInput(
 
   // execution function
   async ({ effects }) => {
-    const status = await sdk.getStatus(effects, { packageId: 'grafana' })
+    const status = await sdk.getStatus(effects, { packageId: manifest.id })
 
     if (status.main === 'running') {
       await reloadPrometheus()

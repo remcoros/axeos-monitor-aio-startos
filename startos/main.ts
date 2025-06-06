@@ -90,9 +90,18 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   exec(`chmod g+w ${jsonExporterSubcontainer.rootfs}/config`)
 
   // grafana provisioning
-  exec(`cp ${grafanaSubcontainer.rootfs}/assets/provisioning/datasources/prometheus.yml ${grafanaSubcontainer.rootfs}/etc/grafana/provisioning/datasources/prometheus.yml`)
-  exec(`cp ${grafanaSubcontainer.rootfs}/assets/provisioning/dashboards/dashboards.yml ${grafanaSubcontainer.rootfs}/etc/grafana/provisioning/dashboards/dashboards.yml`)
-  exec(`cp ${grafanaSubcontainer.rootfs}/assets/dashboards/axeos.json ${grafanaSubcontainer.rootfs}/etc/grafana/dashboards/axeos.json`)
+  exec(
+    `cp ${grafanaSubcontainer.rootfs}/assets/provisioning/datasources/prometheus.yml ` +
+      `${grafanaSubcontainer.rootfs}/etc/grafana/provisioning/datasources/prometheus.yml`,
+  )
+  exec(
+    `cp ${grafanaSubcontainer.rootfs}/assets/provisioning/dashboards/dashboards.yml ` +
+      `${grafanaSubcontainer.rootfs}/etc/grafana/provisioning/dashboards/dashboards.yml`,
+  )
+  exec(
+    `cp ${grafanaSubcontainer.rootfs}/assets/dashboards/axeos.json ` +
+      `${grafanaSubcontainer.rootfs}/etc/grafana/dashboards/axeos.json`,
+  )
 
   const healthReceipts: T.HealthCheck[] = []
 
@@ -103,7 +112,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       runAsInit: true,
       env: {},
       ready: {
-        display: 'JSON Exporter',
+        display: null,
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, 7979, {
             successMessage: 'JSON Exporter is ready',
@@ -147,14 +156,14 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       ready: {
         display: 'Grafana', // If null, the health check will NOT be displayed to the user. If provided, this string will be the name of the health check and displayed to the user.
         // The function below determines the health status of the daemon.
+        gracePeriod: 60000,
         fn: () =>
           sdk.healthCheck.checkWebUrl(
             effects,
             'http://axeos-monitor-aio.startos:' + uiPort,
             {
-              timeout: 60000,
               successMessage: 'Grafana is ready',
-              errorMessage: 'Grafana is unreachable',              
+              errorMessage: 'Grafana is unreachable',
             },
           ),
       },
