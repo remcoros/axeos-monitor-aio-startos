@@ -108,9 +108,11 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   return sdk.Daemons.of(effects, started, healthReceipts)
     .addDaemon('json-exporter', {
       subcontainer: jsonExporterSubcontainer,
-      command: ['/bin/json_exporter', '--config.file=/config/config.yml'],
-      runAsInit: true,
-      env: {},
+      exec: {
+        command: ['/bin/json_exporter', '--config.file=/config/config.yml'],
+        runAsInit: true,
+        env: {},
+      },
       ready: {
         display: null,
         fn: () =>
@@ -123,14 +125,16 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     })
     .addDaemon('prometheus', {
       subcontainer: prometheusSubcontainer,
-      command: [
-        '/bin/prometheus',
-        '--config.file=/etc/prometheus/prometheus.yml',
-        '--storage.tsdb.path=/prometheus',
-        '--web.enable-lifecycle', // Enable the /-/reload endpoint
-      ],
-      runAsInit: true,
-      env: {},
+      exec: {
+        command: [
+          '/bin/prometheus',
+          '--config.file=/etc/prometheus/prometheus.yml',
+          '--storage.tsdb.path=/prometheus',
+          '--web.enable-lifecycle', // Enable the /-/reload endpoint
+        ],
+        runAsInit: true,
+        env: {},
+      },
       ready: {
         display: 'Prometheus',
         fn: () =>
@@ -143,15 +147,17 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     })
     .addDaemon('grafana', {
       subcontainer: grafanaSubcontainer,
-      command: ['/run.sh'], // The command to start the daemon.
-      runAsInit: true,
-      env: {
-        GF_ANALYTICS_REPORTING_ENABLED: 'false', // Disable analytics reporting
-        GF_ANALYTICS_CHECK_FOR_UPDATES: 'false', // Disable update checks
-        GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: 'false', // Disable update checks
-        GF_ANALYTICS_FEEDBACK_LINKS_ENABLED: 'false', // Disable feedback links
-        GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH:
-          '/etc/grafana/dashboards/axeos.json', // Set the default home dashboard
+      exec: {
+        command: ['/run.sh'], // The command to start the daemon.
+        runAsInit: true,
+        env: {
+          GF_ANALYTICS_REPORTING_ENABLED: 'false', // Disable analytics reporting
+          GF_ANALYTICS_CHECK_FOR_UPDATES: 'false', // Disable update checks
+          GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: 'false', // Disable update checks
+          GF_ANALYTICS_FEEDBACK_LINKS_ENABLED: 'false', // Disable feedback links
+          GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH:
+            '/etc/grafana/dashboards/axeos.json', // Set the default home dashboard
+        },
       },
       ready: {
         display: 'Grafana', // If null, the health check will NOT be displayed to the user. If provided, this string will be the name of the health check and displayed to the user.
