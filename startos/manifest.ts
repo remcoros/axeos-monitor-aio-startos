@@ -29,7 +29,7 @@ export const manifest = setupManifest({
     grafana: {
       arch: arch,
       source: {
-        dockerTag: 'grafana/grafana-oss:12.0.1',
+        dockerTag: 'grafana/grafana-oss:12.0.2',
       },
     } as SDKImageInputSpec,
     prometheus: {

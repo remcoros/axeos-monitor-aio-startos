@@ -2,5 +2,5 @@ import { sdk } from './sdk'
 
 export const { createBackup, restoreInit } = sdk.setupBackups(
   async ({ effects }) =>
-    sdk.Backups.volumes('grafana', 'prometheus'),
+    sdk.Backups.ofVolumes('grafana', 'prometheus'),
 )

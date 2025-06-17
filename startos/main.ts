@@ -103,9 +103,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       `${grafanaSubcontainer.rootfs}/etc/grafana/dashboards/axeos.json`,
   )
 
-  const healthReceipts: T.HealthCheck[] = []
-
-  return sdk.Daemons.of(effects, started, healthReceipts)
+  return sdk.Daemons.of(effects, started)
     .addDaemon('json-exporter', {
       subcontainer: jsonExporterSubcontainer,
       exec: {
@@ -114,7 +112,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
         env: {},
       },
       ready: {
-        display: null,
+        display: 'JSON Exporter',
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, 7979, {
             successMessage: 'JSON Exporter is ready',
