@@ -35,7 +35,7 @@ export const manifest = setupManifest({
     prometheus: {
       arch: arch,
       source: {
-        dockerTag: 'prom/prometheus:v3.4.1',
+        dockerTag: 'prom/prometheus:v3.4.2',
       },
     } as SDKImageInputSpec,
     'json-exporter': {
