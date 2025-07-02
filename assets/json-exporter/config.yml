@@ -85,10 +85,10 @@ modules:
         help: Uptime in seconds
         labels:
           hostname: "{.hostname}"
-      - name: axe_stratum_diff
-        path: "{.stratumDiff}"
+      - name: axe_pool_difficulty
+        path: "{.poolDifficulty}"
         type: value
-        help: Stratum difficulty
+        help: Pool difficulty
         labels:
           hostname: "{.hostname}"
       - name: axe_vr_temp
