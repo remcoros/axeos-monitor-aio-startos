@@ -19,6 +19,7 @@ export const manifest = setupManifest({
   upstreamRepo: 'https://github.com/remcoros/axeos-monitor-aio-startos',
   supportSite: 'https://github.com/remcoros/axeos-monitor-aio-startos',
   marketingSite: 'https://github.com/remcoros/axeos-monitor-aio-startos',
+  docsUrl: 'https://github.com/remcoros/axeos-monitor-aio-startos/blob/main/instructions.md',
   donationUrl: 'https://github.com/remcoros/',
   description: {
     short: 'AxeOS Monitor (all in one)',
@@ -35,7 +36,7 @@ export const manifest = setupManifest({
     prometheus: {
       arch: arch,
       source: {
-        dockerTag: 'prom/prometheus:v3.4.2',
+        dockerTag: 'prom/prometheus:v3.5.0',
       },
     } as SDKImageInputSpec,
     'json-exporter': {
