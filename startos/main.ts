@@ -155,6 +155,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
           GF_ANALYTICS_FEEDBACK_LINKS_ENABLED: 'false', // Disable feedback links
           GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH:
             '/etc/grafana/dashboards/axeos.json', // Set the default home dashboard
+          GF_LOG_LEVEL: 'warn',
         },
       },
       ready: {
