@@ -465,6 +465,8 @@ jobs:
     name: Build S9PK (Universal)
     runs-on: ubuntu-24.04
     needs: [BuildARM, BuildIntel]
+    permissions:
+      contents: write
     steps:
       - name: Prepare StartOS SDK
         uses: k0gen/sdk@v3-optimization
