@@ -1,6 +1,5 @@
 import { sdk } from './sdk'
-import { T } from '@start9labs/start-sdk'
-import { ensureFileExists, uiPort } from './utils'
+import { uiPort } from './utils'
 import { exec } from 'child_process'
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
