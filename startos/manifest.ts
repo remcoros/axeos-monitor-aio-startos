@@ -26,7 +26,7 @@ export const manifest = setupManifest({
     grafana: {
       arch: architectures,
       source: {
-        dockerTag: 'grafana/grafana-oss:12.1.1',
+        dockerTag: 'grafana/grafana:12.2.0',
       },
     } as SDKImageInputSpec,
     prometheus: {
