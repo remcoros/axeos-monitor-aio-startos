@@ -26,13 +26,13 @@ export const manifest = setupManifest({
     grafana: {
       arch: architectures,
       source: {
-        dockerTag: 'grafana/grafana:12.2.0',
+        dockerTag: 'grafana/grafana:12.2.1',
       },
     } as SDKImageInputSpec,
     prometheus: {
       arch: architectures,
       source: {
-        dockerTag: 'prom/prometheus:v3.5.0',
+        dockerTag: 'prom/prometheus:v3.7.1',
       },
     } as SDKImageInputSpec,
     'json-exporter': {
