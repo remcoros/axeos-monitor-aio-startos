@@ -2,6 +2,7 @@ import { axeosConfig } from '../fileModels/axeos.yml'
 import { sdk } from '../sdk'
 import { T } from '@start9labs/start-sdk'
 import { reloadPrometheusConfig } from './reloadPrometheusConfig'
+import { store } from '../fileModels/store.json'
 
 const { InputSpec, Value } = sdk
 
@@ -13,6 +14,12 @@ export const inputSpec = InputSpec.of({
     required: true,
     default: '',
     placeholder: '',
+  }),
+  axeosVersion: Value.select({
+    name: 'AxeOS (ESP-Miner) Version',
+    description: 'The version of AxeOS (ESP-Miner) you are running.',
+    default: '2.11',
+    values: { '2.11': '>= 2.11.x', '2.10': '<= 2.10.x' },
   }),
   scrape_interval: Value.number({
     name: 'Scrape Interval',
@@ -34,8 +41,8 @@ export const config = sdk.Action.withInput(
 
   // metadata
   async ({ effects }) => ({
-    name: 'Add Bitaxe/AxeOS IP Address(es)',
-    description: 'Add IP address(es) to monitor.',
+    name: 'Configure AxeOS Monitor',
+    description: 'Configure AxeOS Monitor settings',
     warning: null,
     allowedStatuses: 'any',
     group: 'Configuration',
@@ -60,8 +67,12 @@ async function readSettings(effects: T.Effects): Promise<PartialInputSpec> {
     )
     .join('\n')
 
+  const storeData = await store.read().once()
+  const axeosVersion = storeData?.axeosVersion as InputSpec['axeosVersion']
+
   return {
     ip_addresses: ip_addresses ?? '',
+    axeosVersion: axeosVersion,
     scrape_interval: parseInt(
       conf?.scrape_configs[0]?.scrape_interval?.replace('s', '') ?? '15',
     ),
@@ -105,4 +116,12 @@ async function writeSettings(effects: T.Effects, input: InputSpec) {
     effects,
     input: {},
   })
+
+  // only write axeosVersion to store if changed to avoid unnecessary restart
+  const storeData = await store.read().once()
+  if (storeData?.axeosVersion !== input.axeosVersion) {
+    await store.merge(effects, {
+      axeosVersion: input.axeosVersion,
+    })
+  }
 }
