@@ -1,9 +1,12 @@
+import { store } from './fileModels/store.json'
 import { sdk } from './sdk'
 import { uiPort } from './utils'
 import { exec } from 'child_process'
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   console.info('Starting AxeOS Monitor...')
+
+  const axeosVersion = (await store.read().const(effects))?.axeosVersion ?? '2.11'
 
   const grafanaSubcontainer = await sdk.SubContainer.of(
     effects,
@@ -85,6 +88,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   exec(`chown -R nobody:0 ${prometheusSubcontainer.rootfs}/etc/prometheus`)
   exec(`chmod g+w ${prometheusSubcontainer.rootfs}/prometheus`)
 
+  exec(`chown -R nobody:0 ${jsonExporterSubcontainer.rootfs}/assets`)
   exec(`chown -R nobody:0 ${jsonExporterSubcontainer.rootfs}/config`)
   exec(`chmod g+w ${jsonExporterSubcontainer.rootfs}/config`)
 
@@ -98,7 +102,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       `${grafanaSubcontainer.rootfs}/etc/grafana/provisioning/dashboards/dashboards.yml`,
   )
   exec(
-    `cp ${grafanaSubcontainer.rootfs}/assets/dashboards/axeos.json ` +
+    `cp ${grafanaSubcontainer.rootfs}/assets/dashboards/axeos-${axeosVersion}.json ` +
       `${grafanaSubcontainer.rootfs}/etc/grafana/dashboards/axeos.json`,
   )
 
@@ -106,7 +110,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     .addDaemon('json-exporter', {
       subcontainer: jsonExporterSubcontainer,
       exec: {
-        command: ['/bin/json_exporter', '--config.file=/config/config.yml'],
+        command: ['/bin/json_exporter', `--config.file=/config/config-${axeosVersion}.yml`],
         runAsInit: true,
         env: {},
       },

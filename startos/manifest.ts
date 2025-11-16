@@ -1,5 +1,6 @@
 import { setupManifest } from '@start9labs/start-sdk'
 import { SDKImageInputSpec } from '@start9labs/start-sdk/base/lib/types/ManifestTypes'
+import { GRAFANA_VERSION, JSON_EXPORTER_VERSION, PROMETHEUS_VERSION } from './install/versions'
 
 const BUILD = process.env.BUILD || ''
 
@@ -26,19 +27,19 @@ export const manifest = setupManifest({
     grafana: {
       arch: architectures,
       source: {
-        dockerTag: 'grafana/grafana:12.2.1',
+        dockerTag: 'grafana/grafana:' + GRAFANA_VERSION,
       },
     } as SDKImageInputSpec,
     prometheus: {
       arch: architectures,
       source: {
-        dockerTag: 'prom/prometheus:v3.7.3',
+        dockerTag: 'prom/prometheus:v' + PROMETHEUS_VERSION,
       },
     } as SDKImageInputSpec,
     'json-exporter': {
       arch: architectures,
       source: {
-        dockerTag: 'prometheuscommunity/json-exporter:v0.7.0',
+        dockerTag: 'prometheuscommunity/json-exporter:v' + JSON_EXPORTER_VERSION,
       },
     } as SDKImageInputSpec,
   },
