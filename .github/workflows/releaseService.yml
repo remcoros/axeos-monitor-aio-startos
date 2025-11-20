@@ -99,6 +99,12 @@ jobs:
         run: |
           start-cli init-key
           chmod 600 ~/.startos/developer.key.pem
+          if [[ -n "$S9DEVKEY" ]]; then
+            echo "Using developer key from secrets to sign the package."
+            printf '%s' "$S9DEVKEY" > ~/.startos/developer.key.pem
+          else
+            echo "Using newly generated developer key to sign the package."
+          fi
 
           echo "🏗️ Building ARM package:"
           echo "  Build type: ${{ steps.check-dockerfile.outputs.build_type }}"
@@ -321,6 +327,12 @@ jobs:
         run: |
           start-cli init-key
           chmod 600 ~/.startos/developer.key.pem
+          if [[ -n "$S9DEVKEY" ]]; then
+            echo "Using developer key from secrets to sign the package."
+            printf '%s' "$S9DEVKEY" > ~/.startos/developer.key.pem
+          else
+            echo "Using newly generated developer key to sign the package."
+          fi
 
           echo "🏗️ Building Intel package:"
           echo "  Build type: ${{ steps.check-dockerfile.outputs.build_type }}"
@@ -542,6 +554,12 @@ jobs:
         run: |
           start-cli init-key
           chmod 600 ~/.startos/developer.key.pem
+          if [[ -n "$S9DEVKEY" ]]; then
+            echo "Using developer key from secrets to sign the package."
+            printf '%s' "$S9DEVKEY" > ~/.startos/developer.key.pem
+          else
+            echo "Using newly generated developer key to sign the package."
+          fi
 
           echo "⚡ Building universal package with MAXIMUM cache optimization:"
           echo "  Build type: ${{ needs.BuildARM.outputs.build_type }}"
