@@ -96,6 +96,7 @@ jobs:
           # CONDITIONAL: Enable BuildKit cache only for custom builds
           DOCKER_BUILDKIT: 1
           BUILDKIT_PROGRESS: plain
+          S9DEVKEY: ${{ secrets.S9DEVKEY }}
         run: |
           start-cli init-key
           chmod 600 ~/.startos/developer.key.pem
@@ -324,6 +325,7 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
           BUILDKIT_PROGRESS: plain
+          S9DEVKEY: ${{ secrets.S9DEVKEY }}
         run: |
           start-cli init-key
           chmod 600 ~/.startos/developer.key.pem
@@ -551,6 +553,7 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
           BUILDKIT_PROGRESS: plain
+          S9DEVKEY: ${{ secrets.S9DEVKEY }}
         run: |
           start-cli init-key
           chmod 600 ~/.startos/developer.key.pem
