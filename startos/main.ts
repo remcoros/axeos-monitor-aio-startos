@@ -6,7 +6,8 @@ import { exec } from 'child_process'
 export const main = sdk.setupMain(async ({ effects, started }) => {
   console.info('Starting AxeOS Monitor...')
 
-  const axeosVersion = (await store.read().const(effects))?.axeosVersion ?? '2.11'
+  const axeosVersion =
+    (await store.read().const(effects))?.axeosVersion ?? '2.11'
 
   const grafanaSubcontainer = await sdk.SubContainer.of(
     effects,
@@ -93,13 +94,23 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   exec(`chmod g+w ${jsonExporterSubcontainer.rootfs}/config`)
 
   // grafana provisioning
+  const provisioningDir = `${grafanaSubcontainer.rootfs}/etc/grafana/provisioning`
+
   exec(
-    `cp ${grafanaSubcontainer.rootfs}/assets/provisioning/datasources/prometheus.yml ` +
-      `${grafanaSubcontainer.rootfs}/etc/grafana/provisioning/datasources/prometheus.yml`,
+    `mkdir -p ` +
+      `${provisioningDir}/datasources ` +
+      `${provisioningDir}/dashboards ` +
+      `${provisioningDir}/plugins ` +
+      `${provisioningDir}/alerting`,
+  )
+
+  exec(
+    `cp -r ${grafanaSubcontainer.rootfs}/assets/provisioning/datasources ` +
+      `${provisioningDir}/datasources`,
   )
   exec(
-    `cp ${grafanaSubcontainer.rootfs}/assets/provisioning/dashboards/dashboards.yml ` +
-      `${grafanaSubcontainer.rootfs}/etc/grafana/provisioning/dashboards/dashboards.yml`,
+    `cp -r ${grafanaSubcontainer.rootfs}/assets/provisioning/dashboards ` +
+      `${provisioningDir}/dashboards`,
   )
   exec(
     `cp ${grafanaSubcontainer.rootfs}/assets/dashboards/axeos-${axeosVersion}.json ` +
@@ -110,7 +121,11 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     .addDaemon('json-exporter', {
       subcontainer: jsonExporterSubcontainer,
       exec: {
-        command: ['/bin/json_exporter', `--config.file=/config/config-${axeosVersion}.yml`],
+        command: [
+          '/bin/json_exporter',
+          `--config.file=/config/config-${axeosVersion}.yml`,
+          '--log.level=warn',
+        ],
         runAsInit: true,
         env: {},
       },
@@ -132,6 +147,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
           '--config.file=/etc/prometheus/prometheus.yml',
           '--storage.tsdb.path=/prometheus',
           '--web.enable-lifecycle', // Enable the /-/reload endpoint
+          '--log.level=warn',
         ],
         runAsInit: true,
         env: {},
