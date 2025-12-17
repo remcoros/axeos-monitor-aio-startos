@@ -3,7 +3,7 @@ import { sdk } from './sdk'
 import { uiPort } from './utils'
 import { exec } from 'child_process'
 
-export const main = sdk.setupMain(async ({ effects, started }) => {
+export const main = sdk.setupMain(async ({ effects }) => {
   console.info('Starting AxeOS Monitor...')
 
   const axeosVersion =
@@ -117,7 +117,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       `${grafanaSubcontainer.rootfs}/etc/grafana/dashboards/axeos.json`,
   )
 
-  return sdk.Daemons.of(effects, started)
+  return sdk.Daemons.of(effects)
     .addDaemon('json-exporter', {
       subcontainer: jsonExporterSubcontainer,
       exec: {

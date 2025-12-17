@@ -1,11 +1,9 @@
 import { setupManifest } from '@start9labs/start-sdk'
-import { SDKImageInputSpec } from '@start9labs/start-sdk/base/lib/types/ManifestTypes'
-import { GRAFANA_VERSION, JSON_EXPORTER_VERSION, PROMETHEUS_VERSION } from './install/versions'
-
-const BUILD = process.env.BUILD || ''
-
-const architectures =
-  BUILD === 'x86_64' || BUILD === 'aarch64' ? [BUILD] : ['x86_64', 'aarch64']
+import {
+  GRAFANA_VERSION,
+  JSON_EXPORTER_VERSION,
+  PROMETHEUS_VERSION,
+} from './install/versions'
 
 export const manifest = setupManifest({
   id: 'axeos-monitor-aio',
@@ -25,26 +23,24 @@ export const manifest = setupManifest({
   volumes: ['grafana', 'prometheus'],
   images: {
     grafana: {
-      arch: architectures,
       source: {
         dockerTag: 'grafana/grafana:' + GRAFANA_VERSION,
       },
-    } as SDKImageInputSpec,
+    },
     prometheus: {
-      arch: architectures,
       source: {
         dockerTag: 'prom/prometheus:v' + PROMETHEUS_VERSION,
       },
-    } as SDKImageInputSpec,
+    },
     'json-exporter': {
-      arch: architectures,
       source: {
-        dockerTag: 'prometheuscommunity/json-exporter:v' + JSON_EXPORTER_VERSION,
+        dockerTag:
+          'prometheuscommunity/json-exporter:v' + JSON_EXPORTER_VERSION,
       },
-    } as SDKImageInputSpec,
+    },
   },
   hardwareRequirements: {
-    arch: architectures,
+    arch: ['x86_64', 'aarch64'],
   },
   alerts: {
     install: null,
