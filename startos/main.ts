@@ -1,4 +1,5 @@
 import { store } from './fileModels/store.json'
+import { i18n } from './i18n'
 import { sdk } from './sdk'
 import { uiPort } from './utils'
 import { exec } from 'child_process'
@@ -130,11 +131,11 @@ export const main = sdk.setupMain(async ({ effects }) => {
         env: {},
       },
       ready: {
-        display: 'JSON Exporter',
+        display: i18n('JSON Exporter'),
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, 7979, {
-            successMessage: 'JSON Exporter is ready',
-            errorMessage: 'JSON Exporter is unreachable',
+            successMessage: i18n('JSON Exporter is ready'),
+            errorMessage: i18n('JSON Exporter is unreachable'),
           }),
       },
       requires: [],
@@ -156,8 +157,8 @@ export const main = sdk.setupMain(async ({ effects }) => {
         display: 'Prometheus',
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, 9090, {
-            successMessage: 'Prometheus is ready',
-            errorMessage: 'Prometheus is unreachable',
+            successMessage: i18n('Prometheus is ready'),
+            errorMessage: i18n('Prometheus is unreachable'),
           }),
       },
       requires: ['json-exporter'],
@@ -186,8 +187,8 @@ export const main = sdk.setupMain(async ({ effects }) => {
             effects,
             'http://axeos-monitor-aio.startos:' + uiPort,
             {
-              successMessage: 'Grafana is ready',
-              errorMessage: 'Grafana is unreachable',
+              successMessage: i18n('Grafana is ready'),
+              errorMessage: i18n('Grafana is unreachable'),
             },
           ),
       },

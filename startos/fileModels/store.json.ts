@@ -1,4 +1,5 @@
 import { FileHelper, matches } from '@start9labs/start-sdk'
+import { sdk } from '../sdk'
 const { object, literals } = matches
 
 export const StoreShape = object({
@@ -7,7 +8,7 @@ export const StoreShape = object({
 
 export const store = FileHelper.json(
   {
-    volumeId: 'prometheus',
+    base: sdk.volumes.prometheus,
     subpath: 'etc/prometheus/store.json',
   },
   StoreShape,

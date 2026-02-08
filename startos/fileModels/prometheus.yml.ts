@@ -1,4 +1,5 @@
 import { FileHelper, matches } from '@start9labs/start-sdk'
+import { sdk } from '../sdk'
 
 const { object, string, arrayOf } = matches
 
@@ -33,7 +34,7 @@ const shape = object({
 
 export const prometheusConfig = FileHelper.yaml(
   {
-    volumeId: 'prometheus',
+    base: sdk.volumes.prometheus,
     subpath: 'etc/prometheus/prometheus.yml',
   },
   shape,
