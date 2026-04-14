@@ -2,7 +2,7 @@ import { store } from './fileModels/store.json'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
 import { uiPort } from './utils'
-import { exec } from 'child_process'
+import { execSync } from 'child_process'
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info('Starting AxeOS Monitor...')
@@ -82,22 +82,17 @@ export const main = sdk.setupMain(async ({ effects }) => {
   )
 
   // Fix file permissions
-  exec(`chown -R 472:0 ${grafanaSubcontainer.rootfs}/assets`)
-  exec(`chown -R 472:0 ${grafanaSubcontainer.rootfs}/var/lib/grafana`)
-  exec(`chown -R 472:0 ${grafanaSubcontainer.rootfs}/etc/grafana`)
+  execSync(`chown -R 472:0 ${grafanaSubcontainer.rootfs}/var/lib/grafana`)
+  execSync(`chown -R 472:0 ${grafanaSubcontainer.rootfs}/etc/grafana`)
 
-  exec(`chown -R nobody:0 ${prometheusSubcontainer.rootfs}/prometheus`)
-  exec(`chown -R nobody:0 ${prometheusSubcontainer.rootfs}/etc/prometheus`)
-  exec(`chmod g+w ${prometheusSubcontainer.rootfs}/prometheus`)
-
-  exec(`chown -R nobody:0 ${jsonExporterSubcontainer.rootfs}/assets`)
-  exec(`chown -R nobody:0 ${jsonExporterSubcontainer.rootfs}/config`)
-  exec(`chmod g+w ${jsonExporterSubcontainer.rootfs}/config`)
+  execSync(`chown -R nobody:0 ${prometheusSubcontainer.rootfs}/prometheus`)
+  execSync(`chown -R nobody:0 ${prometheusSubcontainer.rootfs}/etc/prometheus`)
+  execSync(`chmod g+w ${prometheusSubcontainer.rootfs}/prometheus`)
 
   // grafana provisioning
   const provisioningDir = `${grafanaSubcontainer.rootfs}/etc/grafana/provisioning`
 
-  exec(
+  execSync(
     `mkdir -p ` +
       `${provisioningDir}/datasources ` +
       `${provisioningDir}/dashboards ` +
@@ -105,15 +100,15 @@ export const main = sdk.setupMain(async ({ effects }) => {
       `${provisioningDir}/alerting`,
   )
 
-  exec(
-    `cp -r ${grafanaSubcontainer.rootfs}/assets/provisioning/datasources ` +
+  execSync(
+    `cp -r ${grafanaSubcontainer.rootfs}/assets/provisioning/datasources/* ` +
       `${provisioningDir}/datasources`,
   )
-  exec(
-    `cp -r ${grafanaSubcontainer.rootfs}/assets/provisioning/dashboards ` +
+  execSync(
+    `cp -r ${grafanaSubcontainer.rootfs}/assets/provisioning/dashboards/* ` +
       `${provisioningDir}/dashboards`,
   )
-  exec(
+  execSync(
     `cp ${grafanaSubcontainer.rootfs}/assets/dashboards/axeos-${axeosVersion}.json ` +
       `${grafanaSubcontainer.rootfs}/etc/grafana/dashboards/axeos.json`,
   )

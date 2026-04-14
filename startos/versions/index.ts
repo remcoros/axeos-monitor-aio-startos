@@ -14,6 +14,6 @@ export const versionGraph = VersionGraph.of({
   other: [v0_1, v0_2, v0_3, v0_4, v0_5, v0_6, v0_7, v0_8],
 })
 
-export const GRAFANA_VERSION = '13.0.0'
+export const GRAFANA_VERSION = '12.4.3'
 export const PROMETHEUS_VERSION = '3.11.2'
 export const JSON_EXPORTER_VERSION = '0.7.0'
