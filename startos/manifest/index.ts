@@ -9,12 +9,12 @@ export const manifest = setupManifest({
   id: 'axeos-monitor-aio',
   title: 'AxeOS Monitor',
   license: 'MIT',
-  wrapperRepo: 'https://github.com/remcoros/axeos-monitor-aio-startos',
+  packageRepo: 'https://github.com/remcoros/axeos-monitor-aio-startos',
   upstreamRepo: 'https://github.com/remcoros/axeos-monitor-aio-startos',
-  supportSite: 'https://github.com/remcoros/axeos-monitor-aio-startos',
-  marketingSite: 'https://github.com/remcoros/axeos-monitor-aio-startos',
-  docsUrl:
+  marketingUrl: 'https://github.com/remcoros/axeos-monitor-aio-startos',
+  docsUrls: [
     'https://github.com/remcoros/axeos-monitor-aio-startos/blob/main/instructions.md',
+  ],
   donationUrl: 'https://github.com/remcoros/',
   description: {
     short: {

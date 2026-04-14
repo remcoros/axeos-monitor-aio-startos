@@ -1,9 +1,8 @@
-import { FileHelper, matches } from '@start9labs/start-sdk'
+import { FileHelper, z } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
-const { object, literals } = matches
 
-export const StoreShape = object({
-  axeosVersion: literals('2.11', '2.10'),
+export const StoreShape = z.object({
+  axeosVersion: z.union([z.literal('2.11'), z.literal('2.10')]),
 })
 
 export const store = FileHelper.json(

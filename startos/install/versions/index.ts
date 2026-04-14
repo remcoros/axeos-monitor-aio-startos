@@ -6,9 +6,10 @@ import { v0_5 } from './v0.5'
 import { v0_6 } from './v0.6'
 import { v0_7 } from './v0.7'
 import { v0_8 } from './v0.8'
+import { v0_9 } from './v0.9'
 
-export { v0_8 as current }
-export const other = [v0_1, v0_2, v0_3, v0_4, v0_5, v0_6, v0_7]
+export { v0_9 as current }
+export const other = [v0_1, v0_2, v0_3, v0_4, v0_5, v0_6, v0_7, v0_8]
 
 export const GRAFANA_VERSION = '12.3.2'
 export const PROMETHEUS_VERSION = '3.9.1'

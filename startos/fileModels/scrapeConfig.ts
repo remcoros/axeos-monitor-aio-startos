@@ -1,31 +1,29 @@
-import { matches } from '@start9labs/start-sdk'
+import { z } from '@start9labs/start-sdk'
 
-const { object, string, arrayOf, number } = matches
-
-export const ScrapeConfigShape = object({
-  scrape_configs: arrayOf(
-    object({
-      job_name: string,
-      scrape_interval: string.optional(),
-      metrics_path: string,
-      params: object({
-        module: arrayOf(string),
+export const ScrapeConfigShape = z.object({
+  scrape_configs: z.array(
+    z.object({
+      job_name: z.string(),
+      scrape_interval: z.string().optional(),
+      metrics_path: z.string(),
+      params: z.object({
+        module: z.array(z.string()),
       }),
-      static_configs: arrayOf(
-        object({
-          targets: arrayOf(string),
+      static_configs: z.array(
+        z.object({
+          targets: z.array(z.string()),
         }),
       ),
-      relabel_configs: arrayOf(
-        object({
-          source_labels: arrayOf(string).optional(),
-          regex: string.optional(),
-          target_label: string,
-          replacement: string.optional(),
+      relabel_configs: z.array(
+        z.object({
+          source_labels: z.array(z.string()).optional(),
+          regex: z.string().optional(),
+          target_label: z.string(),
+          replacement: z.string().optional(),
         }),
       ),
     }),
   ),
 })
 
-export type ScrapeConfigType = typeof ScrapeConfigShape._TYPE
+export type ScrapeConfigType = z.infer<typeof ScrapeConfigShape>

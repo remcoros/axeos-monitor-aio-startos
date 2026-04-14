@@ -21,9 +21,9 @@ export const reloadPrometheusConfig = sdk.Action.withoutInput(
 
   // execution function
   async ({ effects }) => {
-    const status = await sdk.getStatus(effects, { packageId: manifest.id })
+    const status = await sdk.getStatus(effects, { packageId: manifest.id }).once()
 
-    if (status.health.prometheus.result === 'success') {
+    if (status?.health?.['prometheus']?.result === 'success') {
       await reloadPrometheus()
       return {
         version: '1',

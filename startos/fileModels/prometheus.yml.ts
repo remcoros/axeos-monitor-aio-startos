@@ -1,31 +1,29 @@
-import { FileHelper, matches } from '@start9labs/start-sdk'
+import { FileHelper, z } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
 
-const { object, string, arrayOf } = matches
-
-const shape = object({
-  global: object({
-    scrape_interval: string,
+const shape = z.object({
+  global: z.object({
+    scrape_interval: z.string(),
   }),
-  scrape_config_files: arrayOf(string).optional(),
-  scrape_configs: arrayOf(
-    object({
-      job_name: string,
-      metrics_path: string,
-      params: object({
-        module: arrayOf(string),
+  scrape_config_files: z.array(z.string()).optional(),
+  scrape_configs: z.array(
+    z.object({
+      job_name: z.string(),
+      metrics_path: z.string(),
+      params: z.object({
+        module: z.array(z.string()),
       }),
-      static_configs: arrayOf(
-        object({
-          targets: arrayOf(string),
+      static_configs: z.array(
+        z.object({
+          targets: z.array(z.string()),
         }),
       ),
-      relabel_configs: arrayOf(
-        object({
-          source_labels: arrayOf(string).optional(),
-          regex: string.optional(),
-          target_label: string,
-          replacement: string.optional(),
+      relabel_configs: z.array(
+        z.object({
+          source_labels: z.array(z.string()).optional(),
+          regex: z.string().optional(),
+          target_label: z.string(),
+          replacement: z.string().optional(),
         }),
       ),
     }),
@@ -40,7 +38,7 @@ export const prometheusConfig = FileHelper.yaml(
   shape,
 )
 
-export type PrometheusConfigType = typeof shape._TYPE
+export type PrometheusConfigType = z.infer<typeof shape>
 export const defaultPrometheusConfig: PrometheusConfigType = {
   global: {
     scrape_interval: '15s',
