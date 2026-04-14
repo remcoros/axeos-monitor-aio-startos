@@ -3,7 +3,7 @@ import {
   GRAFANA_VERSION,
   JSON_EXPORTER_VERSION,
   PROMETHEUS_VERSION,
-} from '../install/versions'
+} from '../versions'
 
 export const manifest = setupManifest({
   id: 'axeos-monitor-aio',
