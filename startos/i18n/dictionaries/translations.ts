@@ -17,8 +17,9 @@ export default {
     102: 'Navegador de métricas en bruto de Prometheus',
 
     // actions/config.ts
-    200: 'Dirección(es) IP de AxeOS',
-    201: 'Dirección(es) IP de la(s) instancia(s) de AxeOS a monitorear. Una dirección IP por línea.',
+    200: 'Direcciones IP de Bitaxe',
+    201: 'Dirección IP de cada instancia AxeOS/Bitaxe a monitorear.',
+    208: 'Debe ser una dirección IPv4 válida (p. ej. 192.168.1.100)',
     202: 'Versión de AxeOS (ESP-Miner)',
     203: 'La versión de AxeOS (ESP-Miner) que está ejecutando.',
     204: 'Intervalo de scraping',
@@ -49,8 +50,9 @@ export default {
     102: 'Browser für Prometheus-Rohmetriken',
 
     // actions/config.ts
-    200: 'AxeOS-IP-Adresse(n)',
-    201: 'IP-Adresse(n) der zu überwachenden AxeOS-Instanz(en). Eine IP-Adresse pro Zeile.',
+    200: 'Bitaxe IP-Adressen',
+    201: 'IP-Adresse jeder zu überwachenden AxeOS/Bitaxe-Instanz.',
+    208: 'Muss eine gültige IPv4-Adresse sein (z. B. 192.168.1.100)',
     202: 'AxeOS (ESP-Miner) Version',
     203: 'Die Version von AxeOS (ESP-Miner), die Sie ausführen.',
     204: 'Scrape-Intervall',
@@ -81,8 +83,9 @@ export default {
     102: 'Przeglądarka surowych metryk Prometheus',
 
     // actions/config.ts
-    200: 'Adres(y) IP AxeOS',
-    201: 'Adres(y) IP instancji AxeOS do monitorowania. Jeden adres IP na linię.',
+    200: 'Adresy IP Bitaxe',
+    201: 'Adres IP każdej instancji AxeOS/Bitaxe do monitorowania.',
+    208: 'Musi być prawidłowym adresem IPv4 (np. 192.168.1.100)',
     202: 'Wersja AxeOS (ESP-Miner)',
     203: 'Wersja AxeOS (ESP-Miner), którą uruchamiasz.',
     204: 'Interwał zbierania',
@@ -113,8 +116,9 @@ export default {
     102: 'Navigateur de métriques brutes Prometheus',
 
     // actions/config.ts
-    200: 'Adresse(s) IP AxeOS',
-    201: "Adresse(s) IP de l'(des) instance(s) AxeOS à surveiller. Une adresse IP par ligne.",
+    200: 'Adresses IP Bitaxe',
+    201: "Adresse IP de chaque instance AxeOS/Bitaxe à surveiller.",
+    208: 'Doit être une adresse IPv4 valide (ex. 192.168.1.100)',
     202: 'Version AxeOS (ESP-Miner)',
     203: "La version d'AxeOS (ESP-Miner) que vous utilisez.",
     204: 'Intervalle de collecte',

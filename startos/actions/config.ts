@@ -3,27 +3,39 @@ import { sdk } from '../sdk'
 import { T } from '@start9labs/start-sdk'
 import { reloadPrometheusConfig } from './reloadPrometheusConfig'
 import { store } from '../fileModels/store.json'
+import { i18n } from '../i18n'
 
-const { InputSpec, Value } = sdk
+const { InputSpec, Value, List } = sdk
 
 export const inputSpec = InputSpec.of({
-  ip_addresses: Value.textarea({
-    name: 'AxeOS IP Address(es)',
-    description:
-      'IP Address(es) of the AxeOS instance(s) to monitor. One IP address per line.',
-    required: true,
-    default: '',
-    placeholder: '',
-  }),
+  ip_addresses: Value.list(
+    List.text(
+      {
+        name: i18n('Bitaxe IP Addresses'),
+        description: i18n('IP address of each AxeOS/Bitaxe instance to monitor.'),
+        minLength: 1,
+      },
+      {
+        placeholder: '192.168.1.100',
+        inputmode: 'url',
+        patterns: [
+          {
+            regex: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$',
+            description: i18n('Must be a valid IPv4 address (e.g. 192.168.1.100)'),
+          },
+        ],
+      },
+    ),
+  ),
   axeosVersion: Value.select({
-    name: 'AxeOS (ESP-Miner) Version',
-    description: 'The version of AxeOS (ESP-Miner) you are running.',
+    name: i18n('AxeOS (ESP-Miner) Version'),
+    description: i18n('The version of AxeOS (ESP-Miner) you are running.'),
     default: '2.11',
     values: { '2.11': '>= 2.11.x', '2.10': '<= 2.10.x' },
   }),
   scrape_interval: Value.number({
-    name: 'Scrape Interval',
-    description: 'How often to scrape for metrics. Default is 15 seconds.',
+    name: i18n('Scrape Interval'),
+    description: i18n('How often to scrape for metrics. Default is 15 seconds.'),
     required: true,
     default: 15,
     integer: true,
@@ -41,8 +53,8 @@ export const config = sdk.Action.withInput(
 
   // metadata
   async ({ effects }) => ({
-    name: 'Configure AxeOS Monitor',
-    description: 'Configure AxeOS Monitor settings',
+    name: i18n('Configure AxeOS Monitor'),
+    description: i18n('Configure AxeOS Monitor settings'),
     warning: null,
     allowedStatuses: 'any',
     group: 'Configuration',
@@ -61,18 +73,17 @@ export const config = sdk.Action.withInput(
 
 async function readSettings(effects: T.Effects): Promise<PartialInputSpec> {
   const conf = await axeosConfig.read().once()
-  const ip_addresses = conf?.scrape_configs[0]?.static_configs[0]?.targets
-    .map((target) =>
+  const ip_addresses =
+    conf?.scrape_configs[0]?.static_configs[0]?.targets.map((target) =>
       target.replace('http://', '').replace('/api/system/info', ''),
-    )
-    .join('\n')
+    ) ?? []
 
   const storeData = await store.read().once()
   const axeosVersion = storeData?.axeosVersion as InputSpec['axeosVersion']
 
   return {
-    ip_addresses: ip_addresses ?? '',
-    axeosVersion: axeosVersion,
+    ip_addresses,
+    axeosVersion,
     scrape_interval: parseInt(
       conf?.scrape_configs[0]?.scrape_interval?.replace('s', '') ?? '15',
     ),
@@ -80,12 +91,7 @@ async function readSettings(effects: T.Effects): Promise<PartialInputSpec> {
 }
 
 async function writeSettings(effects: T.Effects, input: InputSpec) {
-  var ip_addresses =
-    input.ip_addresses
-      ?.split(/[\s,;\r?\n]+/)
-      .map((ip) => ip.trim())
-      .filter((ip) => ip.length > 0)
-      .map((ip) => `http://${ip}/api/system/info`) ?? []
+  const targets = input.ip_addresses.map((ip) => `http://${ip}/api/system/info`)
 
   await axeosConfig.write(effects, {
     scrape_configs: [
@@ -96,7 +102,7 @@ async function writeSettings(effects: T.Effects, input: InputSpec) {
         params: { module: ['axeos'] },
         static_configs: [
           {
-            targets: ip_addresses,
+            targets,
           },
         ],
         relabel_configs: [

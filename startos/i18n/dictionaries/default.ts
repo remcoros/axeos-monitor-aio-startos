@@ -16,8 +16,9 @@ const dict = {
   'Prometheus raw metrics browser': 102,
 
   // actions/config.ts
-  'AxeOS IP Address(es)': 200,
-  'IP Address(es) of the AxeOS instance(s) to monitor. One IP address per line.': 201,
+  'Bitaxe IP Addresses': 200,
+  'IP address of each AxeOS/Bitaxe instance to monitor.': 201,
+  'Must be a valid IPv4 address (e.g. 192.168.1.100)': 208,
   'AxeOS (ESP-Miner) Version': 202,
   'The version of AxeOS (ESP-Miner) you are running.': 203,
   'Scrape Interval': 204,
