@@ -18,23 +18,23 @@ export const manifest = setupManifest({
   donationUrl: 'https://github.com/remcoros/',
   description: {
     short: {
-      en_US: 'AxeOS Monitor (all in one)',
-      es_ES: 'Monitor de AxeOS (todo en uno)',
-      de_DE: 'AxeOS Monitor (All-in-One)',
-      pl_PL: 'AxeOS Monitor (wszystko w jednym)',
-      fr_FR: "AxeOS Monitor (tout-en-un)",
+      en_US: 'AxeOS Monitor - monitor all your Bitaxes',
+      es_ES: 'AxeOS Monitor - monitorea todos tus Bitaxes',
+      de_DE: 'AxeOS Monitor - überwache alle deine Bitaxes',
+      pl_PL: 'AxeOS Monitor - monitoruj wszystkie swoje Bitaxe',
+      fr_FR: 'AxeOS Monitor - surveillez tous vos Bitaxes',
     },
     long: {
       en_US:
-        'An all-in-one monitoring solution for AxeOS, combining Grafana, Prometheus, and JSON Exporter.',
+        'An all-in-one monitoring solution for AxeOS (Bitaxe), combining Grafana, Prometheus, and JSON Exporter.',
       es_ES:
-        'Una solución de monitoreo todo en uno para AxeOS, que combina Grafana, Prometheus y JSON Exporter.',
+        'Una solución de monitoreo todo en uno para AxeOS (Bitaxe), que combina Grafana, Prometheus y JSON Exporter.',
       de_DE:
-        'Eine All-in-One-Überwachungslösung für AxeOS, die Grafana, Prometheus und JSON Exporter kombiniert.',
+        'Eine All-in-One-Überwachungslösung für AxeOS (Bitaxe), die Grafana, Prometheus und JSON Exporter kombiniert.',
       pl_PL:
-        'Kompleksowe rozwiązanie monitorowania wszystko w jednym dla AxeOS, łączące Grafana, Prometheus i JSON Exporter.',
+        'Kompleksowe rozwiązanie monitorowania wszystko w jednym dla AxeOS (Bitaxe), łączące Grafana, Prometheus i JSON Exporter.',
       fr_FR:
-        'Une solution de surveillance tout-en-un pour AxeOS, combinant Grafana, Prometheus et JSON Exporter.',
+        'Une solution de surveillance tout-en-un pour AxeOS (Bitaxe), combinant Grafana, Prometheus et JSON Exporter.',
     },
   },
   volumes: ['grafana', 'prometheus'],
