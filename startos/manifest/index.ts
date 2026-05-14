@@ -12,9 +12,6 @@ export const manifest = setupManifest({
   packageRepo: 'https://github.com/remcoros/axeos-monitor-aio-startos',
   upstreamRepo: 'https://github.com/remcoros/axeos-monitor-aio-startos',
   marketingUrl: 'https://github.com/remcoros/axeos-monitor-aio-startos',
-  docsUrls: [
-    'https://github.com/remcoros/axeos-monitor-aio-startos/blob/main/instructions.md',
-  ],
   donationUrl: 'https://github.com/remcoros/',
   description: {
     short: {
