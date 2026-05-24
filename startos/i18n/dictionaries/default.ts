@@ -32,6 +32,15 @@ const dict = {
   'Success': 302,
   'Prometheus configuration reloaded successfully.': 303,
   'Prometheus is not running, no action taken.': 304,
+
+  // actions/resetGrafanaAdminPassword.ts
+  'New Admin Password': 400,
+  'The new password for the Grafana admin user. Minimum 4 characters.': 401,
+  'Password must be at least 4 characters': 402,
+  'Reset Admin Password': 403,
+  'Resets the Grafana admin user password. Takes effect immediately.': 404,
+  'This will immediately overwrite the current Grafana admin password.': 405,
+  'Grafana admin password has been reset successfully.': 406,
 } as const
 
 /**

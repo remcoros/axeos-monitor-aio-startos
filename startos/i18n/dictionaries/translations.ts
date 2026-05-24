@@ -33,6 +33,15 @@ export default {
     302: 'Éxito',
     303: 'Configuración de Prometheus recargada exitosamente.',
     304: 'Prometheus no está ejecutándose, no se realizó ninguna acción.',
+
+    // actions/resetGrafanaAdminPassword.ts
+    400: 'Nueva contraseña de administrador',
+    401: 'La nueva contraseña para el usuario administrador de Grafana. Mínimo 4 caracteres.',
+    402: 'La contraseña debe tener al menos 4 caracteres',
+    403: 'Restablecer contraseña de administrador',
+    404: 'Restablece la contraseña del usuario administrador de Grafana. Tiene efecto inmediato.',
+    405: 'Esto sobrescribirá inmediatamente la contraseña actual del administrador de Grafana.',
+    406: 'La contraseña del administrador de Grafana se ha restablecido correctamente.',
   },
   de_DE: {
     // main.ts
@@ -66,6 +75,15 @@ export default {
     302: 'Erfolg',
     303: 'Prometheus-Konfiguration erfolgreich neu geladen.',
     304: 'Prometheus läuft nicht, keine Aktion durchgeführt.',
+
+    // actions/resetGrafanaAdminPassword.ts
+    400: 'Neues Admin-Passwort',
+    401: 'Das neue Passwort für den Grafana-Admin-Benutzer. Mindestens 4 Zeichen.',
+    402: 'Das Passwort muss mindestens 4 Zeichen lang sein',
+    403: 'Admin-Passwort zurücksetzen',
+    404: 'Setzt das Passwort des Grafana-Admin-Benutzers zurück. Tritt sofort in Kraft.',
+    405: 'Dadurch wird das aktuelle Grafana-Admin-Passwort sofort überschrieben.',
+    406: 'Das Grafana-Admin-Passwort wurde erfolgreich zurückgesetzt.',
   },
   pl_PL: {
     // main.ts
@@ -99,6 +117,15 @@ export default {
     302: 'Sukces',
     303: 'Konfiguracja Prometheus przeładowana pomyślnie.',
     304: 'Prometheus nie jest uruchomiony, nie podjęto żadnych działań.',
+
+    // actions/resetGrafanaAdminPassword.ts
+    400: 'Nowe hasło administratora',
+    401: 'Nowe hasło użytkownika administratora Grafana. Minimum 4 znaki.',
+    402: 'Hasło musi mieć co najmniej 4 znaki',
+    403: 'Zresetuj hasło administratora',
+    404: 'Resetuje hasło użytkownika administratora Grafana. Działa natychmiast.',
+    405: 'Spowoduje to natychmiastowe nadpisanie bieżącego hasła administratora Grafana.',
+    406: 'Hasło administratora Grafana zostało pomyślnie zresetowane.',
   },
   fr_FR: {
     // main.ts
@@ -132,5 +159,14 @@ export default {
     302: 'Succès',
     303: 'Configuration Prometheus rechargée avec succès.',
     304: "Prometheus n'est pas en cours d'exécution, aucune action effectuée.",
+
+    // actions/resetGrafanaAdminPassword.ts
+    400: 'Nouveau mot de passe administrateur',
+    401: "Le nouveau mot de passe pour l'utilisateur administrateur Grafana. Minimum 4 caractères.",
+    402: 'Le mot de passe doit comporter au moins 4 caractères',
+    403: "Réinitialiser le mot de passe administrateur",
+    404: "Réinitialise le mot de passe de l'utilisateur administrateur Grafana. Prend effet immédiatement.",
+    405: "Cela écrasera immédiatement le mot de passe actuel de l'administrateur Grafana.",
+    406: "Le mot de passe administrateur Grafana a été réinitialisé avec succès.",
   },
 } satisfies Record<string, LangDict>
