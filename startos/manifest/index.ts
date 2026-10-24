@@ -23,7 +23,12 @@ export const manifest = setupManifest({
       arch: ['x86_64', 'aarch64'],
     },
     'json-exporter': {
-      source: { dockerTag: 'prometheuscommunity/json-exporter:v0.8.0' },
+      source: {
+        dockerBuild: {
+          dockerfile: './Dockerfile.json-exporter',
+          buildArgs: { IMAGE: 'prometheuscommunity/json-exporter:v0.8.0' },
+        },
+      },
       arch: ['x86_64', 'aarch64'],
     },
   },

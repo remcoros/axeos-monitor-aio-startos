@@ -20,7 +20,7 @@ A fourth version matters and is not an image: the AxeOS (ESP-Miner) firmware rel
   gh release view -R prometheus/prometheus --json tagName -q .tagName
   ```
 
-- **JSON Exporter** ([prometheus-community/json_exporter](https://github.com/prometheus-community/json_exporter)) — image `prometheuscommunity/json-exporter`, pinned as `prometheuscommunity/json-exporter:v<version>` (the tag keeps the `v`):
+- **JSON Exporter** ([prometheus-community/json_exporter](https://github.com/prometheus-community/json_exporter)) — image `prometheuscommunity/json-exporter`, pinned as `prometheuscommunity/json-exporter:v<version>` (the tag keeps the `v`) in the `IMAGE` build arg of the `json-exporter` image's `dockerBuild`:
 
   ```sh
   gh release view -R prometheus-community/json_exporter --json tagName -q .tagName

@@ -39,13 +39,13 @@ AxeOS Monitor scrapes the HTTP API of every [AxeOS](https://github.com/bitaxeorg
 
 ## Image and Container Runtime
 
-Three upstream images run side by side, each in its own subcontainer, each on its image's own entrypoint. Prometheus and JSON Exporter are unmodified; the Grafana image is rebuilt with only its Alpine CA store (`/etc/ssl/certs/ca-certificates.crt`) refreshed, which Grafana reads for the plugin catalog and HTTPS datasources. The layer is temporary and comes out once upstream ships an image built on a fixed store.
+Three upstream images run side by side, each in its own subcontainer, each on its image's own entrypoint. Prometheus is unmodified. JSON Exporter is rebuilt by `Dockerfile.json-exporter` only to add the empty `/proc` mount point its image lacks, which StartOS needs and current `start-cli` no longer adds when packing (Start9Labs/start-technologies#4301); that layer comes out once `start-cli` adds it again. The Grafana image is rebuilt with only its Alpine CA store (`/etc/ssl/certs/ca-certificates.crt`) refreshed, which Grafana reads for the plugin catalog and HTTPS datasources. The layer is temporary and comes out once upstream ships an image built on a fixed store.
 
-| Subcontainer    | Image                                 | Purpose                                             |
-| --------------- | ------------------------------------- | --------------------------------------------------- |
-| `grafana`       | `grafana/grafana` + root `Dockerfile` | The dashboard the user opens                        |
-| `prometheus`    | `prom/prometheus`                     | Scrapes and stores the time series                  |
-| `json-exporter` | `prometheuscommunity/json-exporter`   | Turns a miner's JSON status into Prometheus metrics |
+| Subcontainer    | Image                                                            | Purpose                                             |
+| --------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
+| `grafana`       | `grafana/grafana` + root `Dockerfile`                            | The dashboard the user opens                        |
+| `prometheus`    | `prom/prometheus`                                                | Scrapes and stores the time series                  |
+| `json-exporter` | `prometheuscommunity/json-exporter` + `Dockerfile.json-exporter` | Turns a miner's JSON status into Prometheus metrics |
 
 All three are built for x86_64 and aarch64; on a platform without a native build, StartOS runs an available image under emulation (`emulateMissing` is left at its default).
 
@@ -184,7 +184,7 @@ Nothing has to be re-entered after a restore, and no miner has to be reachable f
 
 ```yaml
 package_id: axeos-monitor-aio
-image: grafana/grafana + root Dockerfile (CA store upgrade) # plus prom/prometheus and prometheuscommunity/json-exporter
+image: grafana/grafana + root Dockerfile (CA store upgrade) # plus prom/prometheus, and prometheuscommunity/json-exporter + Dockerfile.json-exporter (/proc mount point)
 architectures:
   - x86_64
   - aarch64 # other platforms run an available image emulated
