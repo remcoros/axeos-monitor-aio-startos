@@ -9,7 +9,7 @@
 > not mentioned here, the upstream documentation is accurate and fully
 > applicable — see the Documentation section of `instructions.md` for links.
 
-AxeOS Monitor scrapes the HTTP API of every [AxeOS](https://github.com/bitaxeorg/ESP-Miner) (ESP-Miner) Bitaxe miner on the local network, stores the samples in Prometheus, and charts them in a preconfigured Grafana dashboard. It is not a wrapper around a single upstream project: it composes three unmodified upstream images with package-supplied configuration.
+AxeOS Monitor scrapes the HTTP API of every [AxeOS](https://github.com/bitaxeorg/ESP-Miner) (ESP-Miner) Bitaxe miner on the local network, stores the samples in Prometheus, and charts them in a preconfigured Grafana dashboard. It is not a wrapper around a single upstream project: it composes three upstream images with package-supplied configuration.
 
 - **Upstream repo (the monitored firmware):** <https://github.com/bitaxeorg/ESP-Miner>
 - **Wrapper repo:** <https://github.com/Start9-Community/axeos-monitor-aio-startos>
@@ -39,13 +39,13 @@ AxeOS Monitor scrapes the HTTP API of every [AxeOS](https://github.com/bitaxeorg
 
 ## Image and Container Runtime
 
-Three unmodified upstream images run side by side, each in its own subcontainer, each on its image's own entrypoint.
+Three upstream images run side by side, each in its own subcontainer, each on its image's own entrypoint. Prometheus and JSON Exporter are unmodified; the Grafana image is rebuilt with only its Alpine CA store (`/etc/ssl/certs/ca-certificates.crt`) refreshed, which Grafana reads for the plugin catalog and HTTPS datasources. The layer is temporary and comes out once upstream ships an image built on a fixed store.
 
-| Subcontainer    | Image                               | Purpose                                             |
-| --------------- | ----------------------------------- | --------------------------------------------------- |
-| `grafana`       | `grafana/grafana`                   | The dashboard the user opens                        |
-| `prometheus`    | `prom/prometheus`                   | Scrapes and stores the time series                  |
-| `json-exporter` | `prometheuscommunity/json-exporter` | Turns a miner's JSON status into Prometheus metrics |
+| Subcontainer    | Image                                 | Purpose                                             |
+| --------------- | ------------------------------------- | --------------------------------------------------- |
+| `grafana`       | `grafana/grafana` + root `Dockerfile` | The dashboard the user opens                        |
+| `prometheus`    | `prom/prometheus`                     | Scrapes and stores the time series                  |
+| `json-exporter` | `prometheuscommunity/json-exporter`   | Turns a miner's JSON status into Prometheus metrics |
 
 All three are built for x86_64 and aarch64; on a platform without a native build, StartOS runs an available image under emulation (`emulateMissing` is left at its default).
 
@@ -127,7 +127,7 @@ Safe to re-run at any time; the form is prefilled from the current config, so a 
 
 ### Reset Admin Password
 
-For when the Grafana admin password is lost. It runs `grafana-cli` against `grafana.db` in a temporary container, so it works whether or not the service is running, and returns the username (`admin`) with the password that was set.
+For when the Grafana admin password is lost. It runs `grafana cli` against `grafana.db` in a temporary container, so it works whether or not the service is running, and returns the username (`admin`) with the password that was set.
 
 Repeatable — each run simply replaces the password again. It does not restart Grafana and does not invalidate existing browser sessions; a signed-in session stays signed in.
 
@@ -184,7 +184,7 @@ Nothing has to be re-entered after a restore, and no miner has to be reachable f
 
 ```yaml
 package_id: axeos-monitor-aio
-image: grafana/grafana # plus prom/prometheus and prometheuscommunity/json-exporter
+image: grafana/grafana + root Dockerfile (CA store upgrade) # plus prom/prometheus and prometheuscommunity/json-exporter
 architectures:
   - x86_64
   - aarch64 # other platforms run an available image emulated

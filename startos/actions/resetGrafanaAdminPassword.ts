@@ -60,7 +60,8 @@ export const resetGrafanaAdminPassword = sdk.Action.withInput(
       'reset-grafana-admin-password',
       async (subc) => {
         await subc.execFail([
-          'grafana-cli',
+          'grafana',
+          'cli',
           '--homepath',
           '/usr/share/grafana',
           'admin',

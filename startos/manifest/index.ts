@@ -13,15 +13,17 @@ export const manifest = setupManifest({
   volumes: ['grafana', 'prometheus'],
   images: {
     grafana: {
-      source: { dockerTag: 'grafana/grafana:12.4.3' },
+      source: {
+        dockerBuild: { buildArgs: { IMAGE: 'grafana/grafana:13.2.4' } },
+      },
       arch: ['x86_64', 'aarch64'],
     },
     prometheus: {
-      source: { dockerTag: 'prom/prometheus:v3.11.2' },
+      source: { dockerTag: 'prom/prometheus:v3.15.1' },
       arch: ['x86_64', 'aarch64'],
     },
     'json-exporter': {
-      source: { dockerTag: 'prometheuscommunity/json-exporter:v0.7.0' },
+      source: { dockerTag: 'prometheuscommunity/json-exporter:v0.8.0' },
       arch: ['x86_64', 'aarch64'],
     },
   },
