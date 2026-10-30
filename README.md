@@ -39,13 +39,13 @@ AxeOS Monitor scrapes the HTTP API of every [AxeOS](https://github.com/bitaxeorg
 
 ## Image and Container Runtime
 
-Three upstream images run side by side, each in its own subcontainer, each on its image's own entrypoint. Prometheus is unmodified. JSON Exporter is rebuilt by `Dockerfile.json-exporter` only to add the empty `/proc` mount point its image lacks, which StartOS needs and current `start-cli` no longer adds when packing (Start9Labs/start-technologies#4301); that layer comes out once `start-cli` adds it again. The Grafana image is rebuilt with only its Alpine CA store (`/etc/ssl/certs/ca-certificates.crt`) refreshed, which Grafana reads for the plugin catalog and HTTPS datasources. The layer is temporary and comes out once upstream ships an image built on a fixed store.
+Three unmodified upstream images run side by side, each in its own subcontainer, each on its image's own entrypoint. Grafana's upstream image includes the updated CA store, and Start SDK 3.1.1 creates the `/proc` mount point when an image lacks it, so no custom Dockerfiles are needed.
 
-| Subcontainer    | Image                                                            | Purpose                                             |
-| --------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-| `grafana`       | `grafana/grafana` + root `Dockerfile`                            | The dashboard the user opens                        |
-| `prometheus`    | `prom/prometheus`                                                | Scrapes and stores the time series                  |
-| `json-exporter` | `prometheuscommunity/json-exporter` + `Dockerfile.json-exporter` | Turns a miner's JSON status into Prometheus metrics |
+| Subcontainer    | Image                               | Purpose                                             |
+| --------------- | ----------------------------------- | --------------------------------------------------- |
+| `grafana`       | `grafana/grafana`                    | The dashboard the user opens                        |
+| `prometheus`    | `prom/prometheus`                    | Scrapes and stores the time series                  |
+| `json-exporter` | `prometheuscommunity/json-exporter` | Turns a miner's JSON status into Prometheus metrics |
 
 All three are built for x86_64 and aarch64; on a platform without a native build, StartOS runs an available image under emulation (`emulateMissing` is left at its default).
 
@@ -161,6 +161,8 @@ Because the daemons are chained, a failing JSON Exporter leaves Prometheus and G
 
 **All three checks are green on a monitor that is scraping nothing.** They cover the package's own processes and say nothing about whether any miner is being reached, which is the failure a user actually reports — the dashboard loads and every panel says "No data". That question is answered on the Prometheus interface under Status → Targets, and it separates into two causes: a target in state `down` with a connection error is a miner the server cannot reach (wrong address, miner offline, or a VLAN in between), while a target that is `up` alongside empty panels means the miner is on an AxeOS release whose fields the selected config does not match — re-run Configure and pick the other release, or accept the gap. Panels that are partly populated are the milder form of the same mismatch.
 
+The **Shares** and **Rejected** panels display the miner's `sharesAccepted` and `sharesRejected` counts. These can reset on a miner restart or pool switch; they are not lifetime totals. Missing or invalid fields are not converted to zero, and collection of rejected share counts begins with the first scrape that exports them.
+
 ## Backups and Restore
 
 Both volumes are copied wholesale — `sdk.Backups.ofVolumes('grafana', 'prometheus')`. Nothing is dumped and nothing is excluded.
@@ -184,7 +186,10 @@ Nothing has to be re-entered after a restore, and no miner has to be reachable f
 
 ```yaml
 package_id: axeos-monitor-aio
-image: grafana/grafana + root Dockerfile (CA store upgrade) # plus prom/prometheus, and prometheuscommunity/json-exporter + Dockerfile.json-exporter (/proc mount point)
+images:
+  grafana: grafana/grafana
+  prometheus: prom/prometheus
+  json-exporter: prometheuscommunity/json-exporter
 architectures:
   - x86_64
   - aarch64 # other platforms run an available image emulated

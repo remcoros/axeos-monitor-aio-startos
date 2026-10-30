@@ -1,5 +1,0 @@
-ARG IMAGE
-FROM ${IMAGE}
-# StartOS mounts procfs at /proc without creating it, and this image ships none (Start9Labs/start-technologies#4301).
-WORKDIR /proc
-WORKDIR /

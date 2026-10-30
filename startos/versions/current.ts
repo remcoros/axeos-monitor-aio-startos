@@ -1,18 +1,18 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '1.0.0:8',
+  version: '1.0.0:9',
   releaseNotes: {
     en_US:
-      'Updated Grafana to 13.2.4, Prometheus to 3.15.1 and JSON Exporter to 0.8.0. Stops trusting certificates from a compromised certificate authority (eMudhra).',
+      'Updated Grafana to 13.3.0 and Start SDK to 3.1.1. All three services now use upstream container images directly. Fixed missing rejected share counts in the dashboard.',
     es_ES:
-      'Grafana actualizado a 13.2.4, Prometheus a 3.15.1 y JSON Exporter a 0.8.0. Deja de confiar en los certificados de una autoridad de certificación comprometida (eMudhra).',
+      'Grafana actualizado a 13.3.0 y Start SDK a 3.1.1. Los tres servicios ahora usan directamente las imágenes de contenedor originales. Corregido el recuento de shares rechazados que faltaba en el panel.',
     de_DE:
-      'Grafana auf 13.2.4, Prometheus auf 3.15.1 und JSON Exporter auf 0.8.0 aktualisiert. Vertraut Zertifikaten einer kompromittierten Zertifizierungsstelle (eMudhra) nicht mehr.',
+      'Grafana auf 13.3.0 und Start SDK auf 3.1.1 aktualisiert. Alle drei Dienste verwenden jetzt direkt die ursprünglichen Container-Images. Fehlende Anzahl abgelehnter Shares im Dashboard behoben.',
     pl_PL:
-      'Zaktualizowano Grafanę do 13.2.4, Prometheusa do 3.15.1 i JSON Exporter do 0.8.0. Przestaje ufać certyfikatom przejętego urzędu certyfikacji (eMudhra).',
+      'Zaktualizowano Grafanę do 13.3.0 i Start SDK do 3.1.1. Wszystkie trzy usługi korzystają teraz bezpośrednio z obrazów kontenerów dostarczanych przez ich autorów. Naprawiono brak liczby odrzuconych udziałów na pulpicie.',
     fr_FR:
-      "Grafana mis à jour vers 13.2.4, Prometheus vers 3.15.1 et JSON Exporter vers 0.8.0. Ne fait plus confiance aux certificats d'une autorité de certification compromise (eMudhra).",
+      'Grafana mis à jour vers 13.3.0 et Start SDK vers 3.1.1. Les trois services utilisent désormais directement les images de conteneur officielles. Correction de l’absence du nombre de shares rejetés dans le tableau de bord.',
   },
   migrations: {
     up: async () => {},

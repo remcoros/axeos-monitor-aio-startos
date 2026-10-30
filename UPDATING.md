@@ -1,6 +1,6 @@
 # Updating the upstream versions
 
-This package pins three upstream images, each released on its own schedule, by tag in `startos/manifest/index.ts`. Prometheus and JSON Exporter run unmodified (`images[<id>].source.dockerTag`); Grafana is built from the root `Dockerfile`, which refreshes the image's CA store on top of the tag passed as `images.grafana.source.dockerBuild.buildArgs.IMAGE`.
+This package pins three unmodified upstream images, each released on its own schedule, by tag in `startos/manifest/index.ts` (`images[<id>].source.dockerTag`).
 
 A fourth version matters and is not an image: the AxeOS (ESP-Miner) firmware release the scrape config and dashboard are written against.
 
@@ -20,7 +20,7 @@ A fourth version matters and is not an image: the AxeOS (ESP-Miner) firmware rel
   gh release view -R prometheus/prometheus --json tagName -q .tagName
   ```
 
-- **JSON Exporter** ([prometheus-community/json_exporter](https://github.com/prometheus-community/json_exporter)) — image `prometheuscommunity/json-exporter`, pinned as `prometheuscommunity/json-exporter:v<version>` (the tag keeps the `v`) in the `IMAGE` build arg of the `json-exporter` image's `dockerBuild`:
+- **JSON Exporter** ([prometheus-community/json_exporter](https://github.com/prometheus-community/json_exporter)) — image `prometheuscommunity/json-exporter`, pinned as `prometheuscommunity/json-exporter:v<version>` (the tag keeps the `v`):
 
   ```sh
   gh release view -R prometheus-community/json_exporter --json tagName -q .tagName
@@ -36,7 +36,7 @@ A fourth version matters and is not an image: the AxeOS (ESP-Miner) firmware rel
 
 ## Applying the bump
 
-1. Edit the matching tag in `startos/manifest/index.ts` (`dockerTag`, or Grafana's `IMAGE` build arg).
+1. Edit the matching `dockerTag` in `startos/manifest/index.ts`.
 2. Bump the revision in `startos/versions/current.ts` (`1.0.0:N` → `1.0.0:N+1`) and write release notes in all five locales.
 3. `make x86` and install on a test server. A Grafana major bump is the one to watch: it migrates `grafana.db` on first start, and a dashboard exported from an older Grafana can lose panels. Open the AxeOS dashboard and confirm every panel still renders.
 

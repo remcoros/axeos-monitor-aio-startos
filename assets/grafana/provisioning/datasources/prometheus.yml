@@ -11,6 +11,6 @@ datasources:
       httpMethod: POST
       manageAlerts: true
       prometheusType: Prometheus
-      prometheusVersion: '2.50.1'
+      prometheusVersion: '3.15.1'
       cacheLevel: 'Low'
       disableRecordingRules: false

@@ -79,6 +79,12 @@ modules:
         help: Shares accepted
         labels:
           hostname: '{.hostname}'
+      - name: axe_shares_rejected
+        path: '{.sharesRejected}'
+        type: value
+        help: Shares rejected
+        labels:
+          hostname: '{.hostname}'
       - name: axe_uptime
         path: '{.uptimeSeconds}'
         type: value
