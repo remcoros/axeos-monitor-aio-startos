@@ -36,9 +36,7 @@ A fourth version matters and is not an image: the AxeOS (ESP-Miner) firmware rel
 
 ## Applying the bump
 
-1. Edit the matching `dockerTag` in `startos/manifest/index.ts`.
-2. Bump the revision in `startos/versions/current.ts` (`1.0.0:N` → `1.0.0:N+1`) and write release notes in all five locales.
-3. `make x86` and install on a test server. A Grafana major bump is the one to watch: it migrates `grafana.db` on first start, and a dashboard exported from an older Grafana can lose panels. Open the AxeOS dashboard and confirm every panel still renders.
+Edit the matching `dockerTag` in `startos/manifest/index.ts`.
 
 ## Adding an AxeOS release
 
