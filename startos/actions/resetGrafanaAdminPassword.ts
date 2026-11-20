@@ -1,3 +1,4 @@
+import { grafanaStore } from '../fileModels/grafanaStore.json'
 import { i18n } from '../i18n'
 import { sdk } from '../sdk'
 
@@ -70,6 +71,7 @@ export const resetGrafanaAdminPassword = sdk.Action.withInput(
         ])
       },
     )
+    await grafanaStore.merge(effects, { adminPassword: input.newPassword })
 
     return {
       version: '1',

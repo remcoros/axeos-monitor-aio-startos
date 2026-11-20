@@ -52,6 +52,15 @@ const dict = {
   // init/index.ts
   'Add the IP address of each Bitaxe you want to monitor': 500,
   'Select the AxeOS (ESP-Miner) version your miners run': 501,
+
+  // actions/showGrafanaCredentials.ts
+  'Grafana Credentials': 600,
+  'Show the Grafana admin username and the password StartOS last set.': 601,
+  'No Grafana password is stored. Run Reset Admin Password.': 602,
+  'Sign in to the Grafana Dashboard with these credentials. If you changed the password in Grafana since, this one no longer works; run Reset Admin Password to set a new one.': 603,
+
+  // init/grafanaCredentials.ts
+  'Get the Grafana admin password before signing in': 604,
 } as const
 
 /**

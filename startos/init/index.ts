@@ -12,6 +12,7 @@ import { i18n } from '../i18n'
 import { sdk } from '../sdk'
 import { setInterfaces } from '../interfaces'
 import { versionGraph } from '../versions'
+import { grafanaCredentials } from './grafanaCredentials'
 
 const addConfigTask = sdk.setupOnInit(async (effects) => {
   if (!(await prometheusConfig.read().once())) {
@@ -41,6 +42,7 @@ export const init = sdk.setupInit(
   actions,
   dependencies,
   addConfigTask,
+  grafanaCredentials,
 )
 
 export const uninit = sdk.setupUninit(versionGraph)

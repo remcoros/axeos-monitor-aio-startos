@@ -1,3 +1,4 @@
+import { grafanaStore } from './fileModels/grafanaStore.json'
 import { store } from './fileModels/store.json'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
@@ -8,6 +9,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
   // dashboard and exporter module below are re-picked for it.
   const axeosVersion =
     (await store.read().const(effects))?.axeosVersion ?? '2.11'
+  const adminPassword = await grafanaStore.read((s) => s.adminPassword).once()
 
   const grafanaSubcontainer = await sdk.SubContainer.eager(
     effects,
@@ -169,6 +171,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
           GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH:
             '/etc/grafana/dashboards/axeos.json',
           GF_LOG_LEVEL: 'warn',
+          ...(adminPassword && { GF_SECURITY_ADMIN_PASSWORD: adminPassword }),
         },
       },
       ready: {

@@ -21,8 +21,8 @@ Your miners need fixed IP addresses. AxeOS Monitor finds them by address, so res
 3. Choose the AxeOS version your miners run. Each miner shows its firmware version on its own web page; pick the option that covers it, or the newest one if none does.
 4. Leave the scrape interval at 15 seconds unless you have a reason to change it. Shorter means more detail and a larger database.
 5. Save, then start the service. Collection begins as soon as it is running.
-6. Open the **Grafana Dashboard** interface and sign in with the username `admin` and the password `admin`.
-7. Change that password straight away — it is the same on every Grafana install, and this address is reachable by anyone on your network. Use **Reset Admin Password**, or Grafana's own profile page.
+6. Run **Grafana Credentials** to see the admin password generated for this install, and save it to a password manager.
+7. Open the **Grafana Dashboard** interface and sign in with the username `admin` and that password.
 
 The AxeOS dashboard opens automatically once you are signed in.
 
@@ -38,13 +38,13 @@ The AxeOS dashboard is a starting point, and it is replaced every time the servi
 
 To open your copy by default, click your profile icon in the top right and pick it from the **Home Dashboard** list.
 
-### If you lose your Grafana password
+### Changing or losing your Grafana password
 
-Run **Reset Admin Password**, choose a new one, and it returns the username and password to sign in with.
+Run **Reset Admin Password**, choose a new one, and it returns the username and password to sign in with. **Grafana Credentials** then shows the new one. If you change the password on Grafana's own profile page instead, Grafana Credentials keeps showing the old one.
 
 ### Raw metrics
 
-The **Prometheus** interface exposes the metrics database directly, for your own queries or for other tools. It has no password of its own — anyone who can reach the address can read it, so publish it accordingly.
+The **Prometheus** interface exposes the metrics database directly, for your own queries or for other tools. It has no password of its own — anyone who can reach the address can read it, and can also make Prometheus reload its configuration or shut down until StartOS restarts it, so publish it accordingly.
 
 ## Limitations
 

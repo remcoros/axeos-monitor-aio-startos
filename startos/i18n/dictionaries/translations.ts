@@ -53,6 +53,11 @@ export default {
     // init/index.ts
     500: 'Añada la dirección IP de cada Bitaxe que quiera monitorear',
     501: 'Seleccione la versión de AxeOS (ESP-Miner) que ejecutan sus mineros',
+    600: 'Credenciales de Grafana',
+    601: 'Muestra el usuario administrador de Grafana y la última contraseña establecida por StartOS.',
+    602: 'No hay ninguna contraseña de Grafana guardada. Ejecute Restablecer contraseña de administrador.',
+    603: 'Inicie sesión en el panel de Grafana con estas credenciales. Si desde entonces cambió la contraseña en Grafana, esta ya no funciona; ejecute Restablecer contraseña de administrador para establecer una nueva.',
+    604: 'Obtenga la contraseña de administrador de Grafana antes de iniciar sesión',
   },
   de_DE: {
     // main.ts
@@ -106,6 +111,11 @@ export default {
     // init/index.ts
     500: 'Füge die IP-Adresse jedes Bitaxe hinzu, den du überwachen möchtest',
     501: 'Wähle die AxeOS-Version (ESP-Miner), die deine Miner ausführen',
+    600: 'Grafana-Zugangsdaten',
+    601: 'Zeigt den Grafana-Administratornamen und das zuletzt von StartOS gesetzte Passwort.',
+    602: 'Es ist kein Grafana-Passwort gespeichert. Führe Administrator-Passwort zurücksetzen aus.',
+    603: 'Melde dich mit diesen Zugangsdaten beim Grafana-Dashboard an. Wenn du das Passwort seitdem in Grafana geändert hast, funktioniert dieses nicht mehr; führe Administrator-Passwort zurücksetzen aus, um ein neues zu setzen.',
+    604: 'Hole dir das Grafana-Administratorpasswort, bevor du dich anmeldest',
   },
   pl_PL: {
     // main.ts
@@ -159,6 +169,11 @@ export default {
     // init/index.ts
     500: 'Dodaj adres IP każdej koparki Bitaxe, którą chcesz monitorować',
     501: 'Wybierz wersję AxeOS (ESP-Miner), której używają Twoje koparki',
+    600: 'Dane logowania Grafany',
+    601: 'Pokazuje nazwę administratora Grafany i hasło ostatnio ustawione przez StartOS.',
+    602: 'Nie zapisano hasła Grafany. Uruchom Zresetuj hasło administratora.',
+    603: 'Zaloguj się do pulpitu Grafany tymi danymi. Jeśli od tego czasu zmieniono hasło w Grafanie, to już nie działa; uruchom Zresetuj hasło administratora, aby ustawić nowe.',
+    604: 'Pobierz hasło administratora Grafany przed zalogowaniem',
   },
   fr_FR: {
     // main.ts
@@ -212,5 +227,10 @@ export default {
     // init/index.ts
     500: 'Ajoutez l’adresse IP de chaque Bitaxe que vous souhaitez surveiller',
     501: 'Sélectionnez la version AxeOS (ESP-Miner) utilisée par vos mineurs',
+    600: 'Identifiants Grafana',
+    601: 'Affiche le nom d’administrateur Grafana et le dernier mot de passe défini par StartOS.',
+    602: 'Aucun mot de passe Grafana n’est enregistré. Lancez Réinitialiser le mot de passe administrateur.',
+    603: 'Connectez-vous au tableau de bord Grafana avec ces identifiants. Si vous avez changé le mot de passe dans Grafana depuis, celui-ci ne fonctionne plus ; lancez Réinitialiser le mot de passe administrateur pour en définir un nouveau.',
+    604: 'Récupérez le mot de passe administrateur Grafana avant de vous connecter',
   },
 } satisfies Record<string, LangDict>
